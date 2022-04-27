@@ -6,12 +6,9 @@ This modules delivers the Open Source Bolt terraform plans and tasks to be avail
 
 1. [Description](#description)
 1. [Setup - The basics of getting started with bolt_pe](#setup)
-    * [What bolt_pe affects](#what-bolt_pe-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with bolt_pe](#beginning-with-bolt_pe)
 1. [Usage - Configuration options and additional functionality](#usage)
-1. [Limitations - OS compatibility, etc.](#limitations)
-1. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
@@ -22,7 +19,7 @@ This module just delivers the terraform tasks and plans and places them under a 
 
 ## Setup
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
 This module needs the [puppetlabs-ruby_task_helper](https://forge.puppet.com/modules/puppetlabs/ruby_task_helper)  module.
 
