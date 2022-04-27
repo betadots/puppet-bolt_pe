@@ -1,2 +1,2 @@
-class bolt_pe_tasks {
+class bolt_pe {
 }
