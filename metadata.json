@@ -2,9 +2,11 @@
   "name": "betadots-bolt_pe",
   "version": "0.1.0",
   "author": "betadots GmbH",
-  "summary": "",
+  "summary": "This modules delivers tasks and plans from open source bolt to be usable on Puppet Enterprise",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/betadots/puppet-bolt_pe",
+  "project_page": "https://github.com/betadots/puppet-bolt_pe",
+  "issues_url": "https://github.com/betadots/puppet-bolt_pe/issues",
   "dependencies": [
     {
       "name": "puppetlabs/ruby_task_helper",
