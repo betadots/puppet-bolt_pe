@@ -56,6 +56,7 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     translate_response = translate_http.request(translate_request)
     translate_result = JSON.parse(translate_response.body)['query']
 
+    # Query PuppetDB for nodes
     result = []
     puppetdb_result = call_function('puppetdb_query', ['from', 'nodes', translate_result])
     puppetdb_result.each do |element|

@@ -1,6 +1,6 @@
 # bolt_pe
 
-This modules delivers the Open Source Bolt terraform plans and tasks to be available on Puppet Enterprise.
+This modules delivers extensions to be used with Puppet Enterprise.
 
 ## Table of Contents
 
@@ -12,10 +12,27 @@ This modules delivers the Open Source Bolt terraform plans and tasks to be avail
 
 ## Description
 
-On Puppet Enterprise the terraform tasks and plans ar enot available.
+### Tasks and Plans
+
+On Puppet Enterprise the terraform tasks and plans are not available.
 These are only available within Bolt Open Source.
 
-This module just delivers the terraform tasks and plans and places them under a new namespace: bolt_pe::
+This module delivers the terraform tasks and plans and places them under a new namespace: bolt_pe
+
+### Custom Functions
+
+The `bolt_pe::get_targets_from_node_groups` function can be used within a plan or any Puppet code to retreive an array of node from a Puppet Enterprise node group.
+
+Usage is straight forward like an other Puppet function:
+
+    plan foo (
+      Enum['All Nodes', 'Production Environment'] $node_group,
+    ) {
+      $targets = bolt_pe::get_targets_from_node_groups($node_group)
+      $targets.each |$target| {
+        # ...
+      }
+    }
 
 ## Setup
 
@@ -26,7 +43,7 @@ This module needs the [puppetlabs-ruby_task_helper](https://forge.puppet.com/mod
 ### Beginning with bolt_pe
 
 Bolt_pe has no Puppet classes.
-It only consits of task and plans.
+It only consists of tasks, plans and functions.
 
 ## Usage
 
@@ -34,5 +51,3 @@ Add this module and the ruby_task_helper module to your Puppet Enterprise Server
 This can be achieved by adding the modules to your control-repo Puppetfile.
 
 Afterwards you should see the tasks in Puppet Enterprise console.
-
-
