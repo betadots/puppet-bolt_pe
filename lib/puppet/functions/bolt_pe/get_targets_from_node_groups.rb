@@ -8,10 +8,10 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
   def run(node_group)
     value = {}
     # get a list of all existing node groups
-    cert   = `puppet config print hostcert`.chomp
-    cacert = `puppet config print localcacert`.chomp
-    key    = `puppet config print hostprivkey`.chomp
-    server = `puppet config print server`.chomp
+    cert   = `/opt/puppetlabs/bin/puppet config print hostcert`.chomp
+    cacert = `/opt/puppetlabs/bin/puppet config print localcacert`.chomp
+    key    = `/opt/puppetlabs/bin/puppet config print hostprivkey`.chomp
+    server = `/opt/puppetlabs/bin/puppet config print server`.chomp
 
     all_groups_uri = URI("https://#{server}:4433/classifier-api/v1/groups")
 
@@ -22,9 +22,15 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     all_groups_http.key = OpenSSL::PKey::RSA.new(File.read(key))
     all_groups_request = Net::HTTP::Get.new all_groups_uri
     all_groups_response = all_groups_http.request(all_groups_request)
-    all_groups_result = JSON.parse(all_groups_response.body)
-    all_groups_result.each do |element|
-      value[element['name']] = element['id']
+
+    case all_groups_response.code
+    when 200
+      all_groups_result = JSON.parse(all_groups_response.body)
+      all_groups_result.each do |element|
+        value[element['name']] = element['id']
+      end
+    else
+      raise StandardError, "Response from #{server} was HTTP #{all_groups_response.code} - #{all_groups_response.message}"
     end
 
     # Get rule from node group
@@ -38,8 +44,13 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     get_rule_http.key = OpenSSL::PKey::RSA.new(File.read(key))
     get_rule_request = Net::HTTP::Get.new get_rule_uri
     get_rule_response = get_rule_http.request(get_rule_request)
-    get_rule_result = JSON.parse(get_rule_response.body)
-    # get_rule_result.to_json
+
+    case get_rule_response.code
+    when 200
+      get_rule_result = JSON.parse(get_rule_response.body)
+    else
+      raise StandardError, "Response from #{server} was HTTP #{all_groups_response.code} - #{all_groups_response.message}"
+    end
 
     # Transform API rule into PQL
     translate_uri = URI("https://#{server}:4433/classifier-api/v1/rules/translate?format=inventory")
@@ -54,7 +65,13 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     translate_request.body = translate_data
     translate_request['Content-Type'] = 'application/json'
     translate_response = translate_http.request(translate_request)
-    translate_result = JSON.parse(translate_response.body)['query']
+
+    case translate_response.code
+    when 200
+      translate_result = JSON.parse(translate_response.body)['query']
+    else
+      raise StandardError, "Response from #{server} was HTTP #{all_groups_response.code} - #{all_groups_response.message}"
+    end
 
     # Query PuppetDB for nodes
     result = []
@@ -62,6 +79,7 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     puppetdb_result.each do |element|
       result << element['certname']
     end
+
     result
   end
 end

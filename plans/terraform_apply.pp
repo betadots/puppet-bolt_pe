@@ -8,14 +8,13 @@ plan bolt_pe::terraform_apply(
   Optional[Boolean] $return_output = false,
   TargetSpec $terraform_host,
 ) {
-
   $apply_opts = {
     'dir' => $dir,
     'state' => $state,
     'state_out' => $state_out,
     'target' => $target,
     'var' => $var,
-    'var_file' => $var_file
+    'var_file' => $var_file,
   }
 
   $apply_logs = run_task('bolt_pe::terraform_apply', $terraform_host, $apply_opts)
@@ -26,7 +25,7 @@ plan bolt_pe::terraform_apply(
 
   $output_opts = {
     'dir' => $dir,
-    'state' => $state
+    'state' => $state,
   }
 
   $output = run_task('bolt_pe::terraform_output', $terraform_host, $output_opts)
