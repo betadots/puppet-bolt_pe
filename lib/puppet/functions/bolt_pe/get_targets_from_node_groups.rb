@@ -24,7 +24,7 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     all_groups_response = all_groups_http.request(all_groups_request)
 
     case all_groups_response.code
-    when 200
+    when '200'
       all_groups_result = JSON.parse(all_groups_response.body)
       all_groups_result.each do |element|
         value[element['name']] = element['id']
@@ -46,7 +46,7 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     get_rule_response = get_rule_http.request(get_rule_request)
 
     case get_rule_response.code
-    when 200
+    when '200'
       get_rule_result = JSON.parse(get_rule_response.body)
     else
       raise StandardError, "Response from #{server} was HTTP #{all_groups_response.code} - #{all_groups_response.message}"
@@ -67,7 +67,7 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     translate_response = translate_http.request(translate_request)
 
     case translate_response.code
-    when 200
+    when '200'
       translate_result = JSON.parse(translate_response.body)['query']
     else
       raise StandardError, "Response from #{server} was HTTP #{all_groups_response.code} - #{all_groups_response.message}"
