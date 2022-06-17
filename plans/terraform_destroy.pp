@@ -7,14 +7,13 @@ plan bolt_pe::terraform_destroy(
   Optional[Variant[String[1], Array[String[1]]]] $var_file = undef,
   TargetSpec $terraform_host,
 ) {
-
   $opts = {
     'dir' => $dir,
     'state' => $state,
     'state_out' => $state_out,
     'target' => $target,
     'var' => $var,
-    'var_file' => $var_file
+    'var_file' => $var_file,
   }
   $result = run_task('bolt_pe::terraform_destroy', $terraform_host, $opts)
   return $result
