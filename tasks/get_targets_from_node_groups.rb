@@ -76,7 +76,7 @@ def run(node_group)
   puppetdb_request = Net::HTTP::Get.new(puppetdb_uri)
   puppetdb_response = puppetdb_http.request(puppetdb_request)
 
-  raise StandardError, "ERROR #{puppetdb_response.code} - #{puppetdb_response.message}" unless puppetdb_response.code == '200'
+  raise StandardError, "ERROR #{puppetdb_response.code} - #{puppetdb_response.message} - translate_result: #{translate_result}" unless puppetdb_response.code == '200'
   puppetdb_result = JSON.parse(puppetdb_response.body)
 
   # return array of certnames
