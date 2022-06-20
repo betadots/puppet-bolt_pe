@@ -14,14 +14,34 @@ This modules delivers extensions to be used with Puppet Enterprise.
 
 ### Tasks and Plans
 
+#### Terraform
+
 On Puppet Enterprise the terraform tasks and plans are not available.
 These are only available within Bolt Open Source.
 
 This module delivers the terraform tasks and plans and places them under a new namespace: bolt_pe
 
+#### Get Targets from Node Groups
+
+On Puppet Enterprise on can group servers into node groups.
+This module provides a task which will read an exusting node group and return the nodes from the provided node group.
+
+Usage is straight forward like an other Puppet Task:
+
+    plan foo (
+      Enum['All Nodes', 'Production Environment'] $node_group,
+      String $puppet_server,
+    ) {
+      $targets = run_task('bolt_pe::get_targets_from_node_groups', $puppet_server, 'node_group' => $node_group)
+      $targets.each |$target| {
+        # ...
+      }
+    }
+
 ### Custom Functions
 
 The `bolt_pe::get_targets_from_node_groups` function can be used within a plan or any Puppet code to retreive an array of node from a Puppet Enterprise node group.
+Attention: this function only works when being run via Bolt!
 
 Usage is straight forward like an other Puppet function:
 
