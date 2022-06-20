@@ -29,7 +29,7 @@ def run(node_group)
   all_groups_request = Net::HTTP::Get.new all_groups_uri
   all_groups_response = all_groups_http.request(all_groups_request)
 
-  raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message} - #{all_groups_response.code.class}" unless all_groups_response.code == '200'
+  raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message}" unless all_groups_response.code == '200'
   all_groups_result = JSON.parse(all_groups_response.body)
   ids = all_groups_result.map { |e| [e['name'], e['id']] }.to_h
 
@@ -44,7 +44,7 @@ def run(node_group)
   get_rule_request = Net::HTTP::Get.new get_rule_uri
   get_rule_response = get_rule_http.request(get_rule_request)
 
-  raise StandardError, "ERROR #{get_rule_response.code} - #{get_rule_response.message} - #{get_rule_response.code.class} - Node Group: #{node_group} - IDS: #{ids} - URI: #{get_rule_uri}" unless get_rule_response.code == '200'
+  raise StandardError, "ERROR #{get_rule_response.code} - #{get_rule_response.message}" unless get_rule_response.code == '200'
   get_rule_result = JSON.parse(get_rule_response.body)
 
   # Transform API rule into PQL
