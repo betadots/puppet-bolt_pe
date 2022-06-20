@@ -48,7 +48,7 @@ def run(node_group)
   get_rule_result = JSON.parse(get_rule_response.body)
 
   # Transform API rule into PQL
-  translate_uri = URI("https://#{server}:4433/classifier-api/v1/rules/translate?format=nodes")
+  translate_uri = URI("https://#{server}:4433/classifier-api/v1/rules/translate?format=inventory")
   translate_data = get_rule_result['rule_with_inherited'].to_json
 
   translate_http = Net::HTTP.new(translate_uri.host, translate_uri.port)
