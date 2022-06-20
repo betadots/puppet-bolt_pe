@@ -44,7 +44,7 @@ def run(node_group)
   get_rule_request = Net::HTTP::Get.new get_rule_uri
   get_rule_response = get_rule_http.request(get_rule_request)
 
-  raise StandardError, "ERROR #{get_rule_response.code} - #{get_rule_response.message} - #{get_rule_response.code.class}" unless get_rule_response.code == '200'
+  raise StandardError, "ERROR #{get_rule_response.code} - #{get_rule_response.message} - #{get_rule_response.code.class} - URI: #{get_rule_uri}" unless get_rule_response.code == '200'
   get_rule_result = JSON.parse(get_rule_response.body)
 
   # Transform API rule into PQL
