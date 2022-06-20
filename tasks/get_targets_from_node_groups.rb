@@ -44,7 +44,7 @@ def run(node_group)
   get_rule_request = Net::HTTP::Get.new get_rule_uri
   get_rule_response = get_rule_http.request(get_rule_request)
 
-  raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message}" unless get_rule_response.code == '200'
+  raise StandardError, "ERROR #{get_rule_response.code} - #{get_rule_response.message} - #{get_rule_response.code.class}" unless get_rule_response.code == '200'
   get_rule_result = JSON.parse(get_rule_response.body)
 
   # Transform API rule into PQL
@@ -61,7 +61,7 @@ def run(node_group)
   translate_request['Content-Type'] = 'application/json'
   translate_response = translate_http.request(translate_request)
 
-  raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message}" unless translate_response.code == '200'
+  raise StandardError, "ERROR #{translate_response.code} - #{translate_response.message}" unless translate_response.code == '200'
   translate_result = JSON.parse(translate_response.body)['query']
 
   # Query PuppetDB for nodes
