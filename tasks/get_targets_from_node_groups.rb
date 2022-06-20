@@ -29,7 +29,7 @@ def run(node_group)
   all_groups_request = Net::HTTP::Get.new all_groups_uri
   all_groups_response = all_groups_http.request(all_groups_request)
 
-  raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message}" unless all_groups_response.code == 200
+  raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message} - #{all_groups_response.code.class}" unless all_groups_response.code == '200'
   all_groups_result = JSON.parse(all_groups_response.body)
   ids = all_groups_result.map { |e| [e['name'], e['id']] }.to_h
 
