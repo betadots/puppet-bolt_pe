@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/opt/puppetlabs/puppet/bin/ruby
 # frozen_string_literal: true
 require 'net/http'
 require 'puppet'
