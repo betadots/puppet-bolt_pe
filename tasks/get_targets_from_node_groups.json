@@ -1,0 +1,12 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "This task reads node groups from PE console and returns an array of nodes being part of the node group",
+  "input_method": "stdin",
+  "parameters": {
+    "node_group": {
+      "description": "Name of the node group",
+      "type": "String"
+    }
+  }
+}

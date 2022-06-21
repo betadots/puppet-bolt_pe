@@ -41,7 +41,7 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     get_rule_request = Net::HTTP::Get.new get_rule_uri
     get_rule_response = get_rule_http.request(get_rule_request)
 
-    raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message}" unless get_rule_response.code == '200'
+    raise StandardError, "ERROR #{get_rule_response.code} - #{get_rule_response.message}" unless get_rule_response.code == '200'
     get_rule_result = JSON.parse(get_rule_response.body)
 
     # Transform API rule into PQL
@@ -58,12 +58,12 @@ Puppet::Functions.create_function(:'bolt_pe::get_targets_from_node_groups') do
     translate_request['Content-Type'] = 'application/json'
     translate_response = translate_http.request(translate_request)
 
-    raise StandardError, "ERROR #{all_groups_response.code} - #{all_groups_response.message}" unless translate_response.code == '200'
+    raise StandardError, "ERROR #{translate_response.code} - #{translate_response.message}" unless translate_response.code == '200'
     translate_result = JSON.parse(translate_response.body)['query']
 
     # Query PuppetDB for nodes
-    puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4")
-    puppetdb_uri.query = URI.encode_www_form({ query: "[\"from\", \"nodes\", #{translate_result}]" })
+    puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4/inventory")
+    puppetdb_uri.query = URI.encode_www_form({ query: "#{translate_result}" })
 
     puppetdb_http = Net::HTTP.new(puppetdb_uri.host, puppetdb_uri.port)
     puppetdb_http.use_ssl = true
