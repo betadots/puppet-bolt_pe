@@ -97,7 +97,8 @@ def run(node_group)
   puppetdb_result = JSON.parse(puppetdb_response.body)
 
   # return array of certnames
-  puppetdb_result.map { |element| element['certname'] }
+  # puppetdb_result.map { |element| element['certname'] }
+  puppetdb_result
 end
 
 params = JSON.parse(STDIN.read)
