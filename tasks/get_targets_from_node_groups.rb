@@ -66,10 +66,10 @@ def run(node_group)
   translate_result = JSON.parse(translate_response.body)['query']
 
   # Query PuppetDB for nodes
-  #puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4")
-  #puppetdb_uri.query = URI.encode_www_form({ query: "[\"from\", \"nodes\", #{translate_result}]" })
-  puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4/inventory")
-  puppetdb_uri.query = URI.encode_www_form({ query: "#{translate_result}]" })
+  puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4")
+  puppetdb_uri.query = URI.encode_www_form({ query: "[\"from\", \"nodes\", #{translate_result}]" })
+  #puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4/inventory")
+  #puppetdb_uri.query = URI.encode_www_form({ query: "#{translate_result}]" })
 
   puppetdb_http = Net::HTTP.new(puppetdb_uri.host, puppetdb_uri.port)
   puppetdb_http.use_ssl = true
@@ -79,6 +79,20 @@ def run(node_group)
   puppetdb_request = Net::HTTP::Get.new(puppetdb_uri)
   puppetdb_response = puppetdb_http.request(puppetdb_request)
 
+  # [ "and",
+  #   ["=", "trusted.authenticated", "remote"],
+  #   ["and", 
+  #     ["and",
+  #       ["=", "trusted.extensions.pp_environment", "production"]
+  #     ],
+  #     ["and",
+  #       ["~", "certname", ".*"]
+  #     ],
+  #     ["and",
+  #       ["~", "certname", ".*"]
+  #     ]
+  #   ]
+  # ]
   raise StandardError, "ERROR #{puppetdb_response.code} - #{puppetdb_response.message} - translate_result: #{translate_result}" unless puppetdb_response.code == '200'
   puppetdb_result = JSON.parse(puppetdb_response.body)
 
