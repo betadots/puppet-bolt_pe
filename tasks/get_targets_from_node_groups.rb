@@ -48,7 +48,6 @@ def run(node_group)
   get_rule_result = JSON.parse(get_rule_response.body)
 
   # Transform API rule into PQL
-  #translate_uri = URI("https://#{server}:4433/classifier-api/v1/rules/translate?format=nodes")
   translate_uri = URI("https://#{server}:4433/classifier-api/v1/rules/translate?format=inventory")
   translate_data = get_rule_result['rule_with_inherited'].to_json
 
@@ -66,8 +65,6 @@ def run(node_group)
   translate_result = JSON.parse(translate_response.body)['query']
 
   # Query PuppetDB for nodes
-  #puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4")
-  #puppetdb_uri.query = URI.encode_www_form({ query: "[\"from\", \"nodes\", #{translate_result}]" })
   puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4/inventory")
   puppetdb_uri.query = URI.encode_www_form({ query: "#{translate_result}" })
 
