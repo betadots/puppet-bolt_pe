@@ -3,12 +3,6 @@
 require 'net/http'
 require 'puppet'
 
-# Initialize Puppet so that the task can make use of
-# the Puppet::Network::HttpPool for communication.
-def initialize_puppet
-  Puppet.initialize_settings(['--libdir=/dev/null', '--factpath=/dev/null'])
-end
-
 def run(node_group)
   # get a list of all existing node groups
   cert   = `/opt/puppetlabs/bin/puppet config print hostcert`.strip
