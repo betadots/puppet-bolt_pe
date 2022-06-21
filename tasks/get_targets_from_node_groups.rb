@@ -66,10 +66,10 @@ def run(node_group)
   translate_result = JSON.parse(translate_response.body)['query']
 
   # Query PuppetDB for nodes
-  puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4")
-  puppetdb_uri.query = URI.encode_www_form({ query: "[\"from\", \"nodes\", #{translate_result}]" })
-  #puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4/inventory")
-  #puppetdb_uri.query = URI.encode_www_form({ query: "#{translate_result}]" })
+  #puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4")
+  #puppetdb_uri.query = URI.encode_www_form({ query: "[\"from\", \"nodes\", #{translate_result}]" })
+  puppetdb_uri = URI("https://#{server}:8081/pdb/query/v4/inventory")
+  puppetdb_uri.query = URI.encode_www_form({ query: "#{translate_result}" })
 
   puppetdb_http = Net::HTTP.new(puppetdb_uri.host, puppetdb_uri.port)
   puppetdb_http.use_ssl = true
