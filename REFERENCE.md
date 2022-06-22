@@ -6,10 +6,11 @@
 
 ### Classes
 
-* [`bolt_pe`](#bolt_pe)
+* [`bolt_pe`](#bolt_pe): Class: bolt_pe
 
 ### Tasks
 
+* [`get_targets_from_node_groups`](#get_targets_from_node_groups): This task reads node groups from PE console and returns an array of nodes being part of the node group
 * [`terrafom_apply`](#terrafom_apply): Apply an HCL manifest
 * [`terrafom_destroy`](#terrafom_destroy): Destroy resources managed with Terraform
 * [`terrafom_initialize`](#terrafom_initialize): Initialize a Terraform project directory
@@ -18,6 +19,7 @@
 
 ### Plans
 
+* [`bolt_pe::get_node_groups`](#bolt_peget_node_groups): get all node groups and print to stdout
 * [`bolt_pe::terraform_apply`](#bolt_peterraform_apply)
 * [`bolt_pe::terraform_destroy`](#bolt_peterraform_destroy)
 
@@ -25,9 +27,23 @@
 
 ### <a name="bolt_pe"></a>`bolt_pe`
 
-The bolt_pe class.
+Class: bolt_pe
 
 ## Tasks
+
+### <a name="get_targets_from_node_groups"></a>`get_targets_from_node_groups`
+
+This task reads node groups from PE console and returns an array of nodes being part of the node group
+
+**Supports noop?** false
+
+#### Parameters
+
+##### `node_group`
+
+Data type: `String`
+
+Name of the node group
 
 ### <a name="terrafom_apply"></a>`terrafom_apply`
 
@@ -190,6 +206,29 @@ Data type: `Hash`
 
 
 ## Plans
+
+### <a name="bolt_peget_node_groups"></a>`bolt_pe::get_node_groups`
+
+get all node groups and print to stdout
+
+#### Parameters
+
+The following parameters are available in the `bolt_pe::get_node_groups` plan:
+
+* [`node_group`](#node_group)
+* [`puppet_server`](#puppet_server)
+
+##### <a name="node_group"></a>`node_group`
+
+Data type: `Enum['All Nodes', 'Production Environment']`
+
+
+
+##### <a name="puppet_server"></a>`puppet_server`
+
+Data type: `String`
+
+
 
 ### <a name="bolt_peterraform_apply"></a>`bolt_pe::terraform_apply`
 
