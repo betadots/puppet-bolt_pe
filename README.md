@@ -38,22 +38,6 @@ Usage is straight forward like an other Puppet Task:
       }
     }
 
-### Custom Functions
-
-The `bolt_pe::get_targets_from_node_groups` function can be used within a plan or any Puppet code to retreive an array of node from a Puppet Enterprise node group.
-Attention: this function only works when being run via Bolt!
-
-Usage is straight forward like an other Puppet function:
-
-    plan foo (
-      Enum['All Nodes', 'Production Environment'] $node_group,
-    ) {
-      $targets = bolt_pe::get_targets_from_node_groups($node_group)
-      $targets.each |$target| {
-        # ...
-      }
-    }
-
 ## Setup
 
 ### Setup Requirements
