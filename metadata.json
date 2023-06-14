@@ -1,6 +1,6 @@
 {
   "name": "betadots-bolt_pe",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "betadots GmbH",
   "summary": "This modules delivers tasks and plans from open source bolt to be usable on Puppet Enterprise",
   "license": "Apache-2.0",
@@ -69,7 +69,7 @@
       "version_requirement": ">= 6.21.0 < 8.0.0"
     }
   ],
-  "pdk-version": "2.2.0",
-  "template-url": "pdk-default#2.2.0",
-  "template-ref": "tags/2.2.0-0-g2381db6"
+  "pdk-version": "2.7.1",
+  "template-url": "pdk-default#2.7.4",
+  "template-ref": "tags/2.7.4-0-g58edf57"
 }
